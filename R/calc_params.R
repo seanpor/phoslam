@@ -1,0 +1,38 @@
+# a function to perform one iteration of a bootstrap or jackknife given a dataset
+# intended to return the Bowes and Greene coefficients along with Qe etc.
+#' @title Calculate the Bowes and Greene parameters for a given set of paired Q and P
+#' @name calc.params
+#' @param Q the measured water flow rate in cubic metres per second
+#' @param P the Total Reactive Phostphate - units- TBD
+#' @export
+calc.params <- function(Q, P) {
+  stopifnot(length(Q) > 1)
+  stopifnot(length(Q) == length(P))
+  
+  b3 <- Bowes.calcs(data.frame(Q=Q, TRP=P))
+  g3 <- Greene.calcs(data.frame(Q=Q, TRP=P))
+  res <- data.frame(# Bowes Params
+                    Bowes.A=b3$Bowes.coefficients[['A']],
+                    Bowes.B=b3$Bowes.coefficients[['B']],
+                    Bowes.C=b3$Bowes.coefficients[['C']],
+                    Bowes.D=b3$Bowes.coefficients[['D']],
+                    Bowes.Qe=b3$Bowes.Qe,
+                    Bowes.PropQeGQ=b3$Bowes.PropQeGQ,
+                    Bowes.PointApportionment=b3$Bowes.PointApportionment,
+                    # Bowes Loads
+                    Bowes.Point.L=sum(b3$results$BowesPoint.L),
+                    Bowes.Diffuse.L=sum(b3$results$BowesDiffuse.L),
+                    # Greene params
+                    Greene.A=g3$Greene.coefficients[['A']],
+                    Greene.B=g3$Greene.coefficients[['B']],
+                    Greene.C=g3$Greene.coefficients[['C']],
+                    Greene.Qe=g3$Greene.Qe,
+                    Greene.PropQeGQ=g3$Greene.PropQeGQ,
+                    Greene.PointApportionment=g3$Greene.PointApportionment,
+                    # Greene Loads
+                    Greene.Point.L=sum(g3$results$GreenePoint.L),
+                    Greene.Diffuse.L=sum(g3$results$GreeneDiffuse.L),
+                    Greene.Hysteresis.L=sum(g3$results$GreeneHysteresis.L),
+                    Greene.DH.L=sum(g3$results$GreeneDH.L))
+  res                    
+}
