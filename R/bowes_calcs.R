@@ -2,7 +2,7 @@
 #' 
 #' Takes a data.frame and performs a number of calculations related
 #' to the Bowes formal
-#' @param d1 a data.frame in a particular format - TBD
+#' @param d1 a data.frame in a particular format- it must have a P column and a TRP column - TBD
 #' @param AltQ an optional numeric vector containing the flows to be used
 #' for apportionment, nb. in m^3/sec
 #' @return a list containing the results

@@ -1,5 +1,5 @@
 #' @title Fit the Bowes A,B,C,D parameters to data
-#' @param d1 dataframe containing...
+#' @param d1 dataframe containing a column "Q" and a column "TRP"
 #' @param bf.iMax maximum number of iterations of XXX defaulting to a million
 #' @name Bowes.fit
 #' @export
