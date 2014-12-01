@@ -8,3 +8,12 @@ diffuse and point sources. Sci Total Environ 395 (2-3), 125-138.
 
 Greene, S., McElarney, Y., Taylor, D., 2013. A predictive geospatial approach for modelling
 phosphorus concentrations in rivers at the landscape scale. J Hydrol 504, 216-225.
+
+# Installation
+
+First you will neeed to install Hadley Wickham's devtools package from CRAN: `install.packages("devtools")`, and then you should be able to install `phoslam` by saying:
+`
+devtools::install_github("seanpor/phoslam")
+`
+
+
