@@ -30,11 +30,9 @@ Calc.Greene.Qe <- function(Greene, adf, sDEBUG=NULL) {
   # we need to range search for the location of the root from zero up
   # to a high point and this line has a stab at figuring out where that is
   q.range <- c(0, adf[which.min(adf$GreenePoint.L - adf$GreeneDH.L),'Q'])
-  if (exists('sDEBUG')) {
-    if (sDEBUG > 5) {
-      cat('  in Calc.Greene.Qe(), the q.range is', q.range[[1]],
-          ',', q.range[[2]], '\n')
-    }
+  if (!is.null(sDEBUG) && sDEBUG > 5) {
+    cat('  in Calc.Greene.Qe(), the q.range is', q.range[[1]],
+        ',', q.range[[2]], '\n')
   }
   GQe <- uniroot(qe.func, interval=q.range, Greene)
   GQe$root

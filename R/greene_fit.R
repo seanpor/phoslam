@@ -35,12 +35,10 @@ Greene.fit <- function(d1, iMax=100, sDEBUG=NULL) {
   } 
   if (class(tmp) == 'try-error')
     stop(tmp)
-  if (exists('sDEBUG')) {
-    if (sDEBUG > 5) {
-      cat('  in Greene.fit(), the iMax is', iMax, '\n')
-      cat('  in Greene.fit(), the class of tmp is', class(tmp), '\n')
-      cat('  in Greene.fit(), tmp is', tmp, '\n')
-    }
+  if (!is.null(sDEBUG) && sDEBUG > 5) {
+    cat('  in Greene.fit(), the iMax is', iMax, '\n')
+    cat('  in Greene.fit(), the class of tmp is', class(tmp), '\n')
+    cat('  in Greene.fit(), tmp is', tmp, '\n')
   }
   tmp  
 }
