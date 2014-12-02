@@ -1,11 +1,17 @@
 Package: phoslam
 Type: Package
 Title: Helper functions for Phosphate Load Apportionment
-Version: 0.2
-Date: 2014-03-05
-Author: Sean O'Riordain, Lucy Crockford
+Version: 0.3
+Date: 2014-12-01
+Authors@R: as.person(c(
+    "Sean O'Riordain <seoriord@tcd.ie> [aut, cre]",
+    "Lucy Crockford <crockfol@tcd.ie> [aut]"
+    ))
 Maintainer: Sean O'Riordain <seoriord@tcd.ie>
+URL: http://www.github.com/seanpor/phoslam/
 Description: A number of useful functions to calculate Phosphate Load
-    Apportionment, including algorithms by Bowes et al. (2008) and Greene et al. (2012).  Resampling is
-    used for error estimates.
+    Apportionment, including algorithms by Bowes et al. (2008) and Greene et
+    al. (2012).  Resampling is used for error estimates.
 License: GPL-2
+Imports:
+    plyr
