@@ -9,6 +9,7 @@
 #' @export
 subsamp.fixeddays <- function(adf, sdays=c('Mon','Wed','Thu')) {
   tmp <- adf[adf$day %in% sdays,]
-  tmp <- subset(tmp, workinghours)
-  ddply(tmp, .(date), subsamp.nrow)
+  # tmp <- subset(tmp, workinghours)
+  tmp <- tmp[tmp$workinghours,]
+  plyr::ddply(tmp, date, subsamp.nrow)
 }

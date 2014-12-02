@@ -10,14 +10,17 @@
 #' @param only.workinghours - default TRUE
 #' @export
 week.of.month <- function(adf, which.day='Mon', which.week=4,
-                          only.workinghours=TRUE) { 
+                          only.workinghours=TRUE) {
   if (only.workinghours) {
-    d1b <- subset(adf, workinghours & day==which.day)
+    # d1b <- subset(adf, workinghours & day==which.day)
+    d1b <- adf[adf$workinghours & adf$day==which.day,]
   } else {
-    d1b <- subset(adf, day==which.day)
+    # d1b <- subset(adf, day==which.day)
+    d1b <- adf[adf$day==which.day,]
   }
-  d1b <- subset(d1b, as.integer(week) %% which.week == 0)
+  # d1b <- subset(d1b, as.integer(week) %% which.week == 0)
+  d1b <- d1b[as.integer(d1b$week) %% which.week == 0,]
   # now we can just pull one random record from this day
-  tmp <- ddply(d1b, .(date), subsamp.nrow)
+  tmp <- plyr::ddply(d1b, date, subsamp.nrow)
   tmp[order(tmp$datetime),]
 }

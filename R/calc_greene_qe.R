@@ -1,10 +1,13 @@
-#' @title Calculate the Greene Qe value using numerical methods
 #' @name Calc.Greene.Qe
-#' @param Greene an Greene object XXX
+#' @title Calculate the Greene Qe value using numerical methods
+#' @param Greene a Greene object XXX
 #' @param adf a dataframe containing XXX
+#' @param sDEBUG a parameter not normally used except in debugging, set to be an
+#' integer >5 for maximum debug information printed.
+
 #' @export
 #
-#' @details Here Qe has to be calculated numerically - so the X value at which
+#' @details Here Qe has to be calculated numerically - so the flow value at which
 #' Point is bigger than (Diffuse + Hysteresis)
 #'
 #' So to figure out Qe, need to find the first zero point of
@@ -17,7 +20,7 @@
 #
 #' nb. should limit Q to be in the range
 #' 0, Q value of min(d1$GreenePoint.L-d1$GreeneDH.L)
-Calc.Greene.Qe <- function(Greene, adf) {
+Calc.Greene.Qe <- function(Greene, adf, sDEBUG=NULL) {
   qe.func <- function(x, GreeneFit) {
     A <- coef(GreeneFit)[['A']]
     B <- coef(GreeneFit)[['B']]

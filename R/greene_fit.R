@@ -5,13 +5,21 @@
 #' $Y = A/X   + B*X     + C*X^2$, i.e. Y = Point + Diffuse + Hysteresis
 #' with   no constraints
 #' @param d1 a data.frame XXX
-#' @param iMax maximum number of iterations? XXX
+#' @param iMax maximum number of iterations? Refer to the Detailed Description.
+#' @param sDEBUG a parameter not normally used except in debugging, set to be an
+#' integer >5 for maximum debug information printed.
 #' @details
 #' Note that sometimes this has problems converging hence
-#' there is a loop and random start points
+#' there is a loop and random start points. 
+#' 
+#' Note too that there will be only iMax iterations of the \code{stats:nls()}
+#' function before the \code{Greene.fit()} function gives up.  However, the
+#'  \code{stats:nls()} itself is parameterized to run 500 iterations, so the
+#'  overall runtime is likely to take some time before it gives up with a
+#'  \code{stop()} message.
 #'
 #' @export
-Greene.fit <- function(d1, iMax=100) {
+Greene.fit <- function(d1, iMax=100, sDEBUG=NULL) {
   i <- 0
   repeat {
     tmp <- stats::nls(TRP ~ A/Q + B*Q + C*Q^2,
@@ -26,7 +34,7 @@ Greene.fit <- function(d1, iMax=100) {
     }
   } 
   if (class(tmp) == 'try-error')
-    error(tmp)
+    stop(tmp)
   if (exists('sDEBUG')) {
     if (sDEBUG > 5) {
       cat('  in Greene.fit(), the iMax is', iMax, '\n')

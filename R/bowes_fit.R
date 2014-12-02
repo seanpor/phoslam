@@ -71,7 +71,7 @@ Bowes.fit <- function(d1, bf.iMax=1e6) {
     bf.i <- bf.i + 1
   } 
   if (class(tmp.bf) == 'try-error')
-    error(tmp.bf)
+    stop(tmp.bf)
   # add in the info from attempts
   tmp.bf$attempt.table <- table(bowes.ivec)
   tmp.bf

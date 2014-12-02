@@ -4,8 +4,9 @@
 #' @name calc.params
 #' @param Q the measured water flow rate in cubic metres per second
 #' @param P the Total Reactive Phostphate - units- TBD
+#' @param Qhi the high-frequency Q values in cubic metres per second
 #' @export
-calc.params <- function(Q, P) {
+calc.params <- function(Q, P, Qhi=NULL) {
   stopifnot(length(Q) > 1)
   stopifnot(length(Q) == length(P))
   
@@ -34,5 +35,18 @@ calc.params <- function(Q, P) {
                     Greene.Diffuse.L=sum(g3$results$GreeneDiffuse.L),
                     Greene.Hysteresis.L=sum(g3$results$GreeneHysteresis.L),
                     Greene.DH.L=sum(g3$results$GreeneDH.L))
+  # if there is a High-Frequency Q series supplied, then
+  # use the information from the above to do the calculations for doing
+  # calculations of Qe, PropQeGQ, Point Apportionment and Total Load
+  if (!is.null(Qhi)) {
+    Bq <- Bowes.ReCalc(data.frame(B.A=res$Bowes.A,
+                       B.B=res$Bowes.B,
+                       B.C=res$Bowes.C,
+                       B.D=res$Bowes.D), Qhi)
+    Gq <- Greene.ReCalc(data.frame(G.A=res$Greene.A,
+                                   G.B=res$Greene.B,
+                                   G.C=res$Greene.C), Qhi)
+    res <- data.frame(res, Bq, Gq)
+  }
   res                    
 }
