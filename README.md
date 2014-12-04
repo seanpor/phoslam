@@ -11,11 +11,13 @@ phosphorus concentrations in rivers at the landscape scale. J Hydrol 504, 216-22
 
 # Installation
 
-First you will neeed to install Hadley Wickham's devtools package from CRAN and then you should be able to install `phoslam` by saying:
-`
+If you are using R on Linux or a Mac the simplest thing is to install Hadley Wickham's devtools package from CRAN and then you should be able to install `phoslam` directly from Github by saying:
+```
 install.packages("devtools")
 devtools::install_github("seanpor/phoslam")
-`
+```
+
+If you're using R on MS-Windows, then...
 
 # Basic Usage
 
@@ -36,45 +38,33 @@ This will print a 2.5%ile, the mean and the 97.5%ile values for each of the para
 
 TO DO, including a detailed description of each parameter output with the units involved.
 
-```
- names(kdf)
- [1] "Bowes.A"                      "Bowes.B"                      "Bowes.C"                      "Bowes.D"
- [5] "Bowes.Qe"                     "Bowes.PropQeGQ"               "Bowes.PointApportionment"     "Bowes.Point.L"
- [9] "Bowes.Diffuse.L"              "Greene.A"                     "Greene.B"                     "Greene.C"
-[13] "Greene.Qe"                    "Greene.PropQeGQ"              "Greene.PointApportionment"    "Greene.Point.L"
-[17] "Greene.Diffuse.L"             "Greene.Hysteresis.L"          "Greene.DH.L"                  "Bowes.Qe.1"
-[21] "Bowes.PropQeGQ.1"             "Bowes.PointApportionment.1"   "Bowes.TotalLoad"              "Greene.Qe.1"
-[25] "Greene.PropQeGQ.1"            "Greene.PointApportionment.1"  "Greene.PointApportionmentNeg" "Greene.TotalLoad"
-[29] "Greene.TotalLoadNeg"
-```
-
 ## Output Params
-  - Bowes.A
-  - Bowes.B
-  - Bowes.C
-  - Bowes.D
-  - Bowes.Qe
-  - Bowes.PropQeGQ
-  - Bowes.PointApportionment
-  - Bowes.Point.L
-  - Bowes.Diffuse.L
-  - Greene.A
-  - Greene.B
-  - Greene.C
-  - Greene.Qe
-  - Greene.PropQeGQ
-  - Greene.PointApportionment
-  - Greene.Point.L
-  - Greene.Diffuse.L
-  - Greene.Hysteresis.L
-  - Greene.DH.L
-  - Bowes.Qe.1
-  - Bowes.PropQeGQ.1
-  - Bowes.PointApportionment.1
-  - Bowes.TotalLoad
-  - Greene.Qe.1
-  - Greene.PropQeGQ.1
-  - Greene.PointApportionment.1
-  - Greene.PointApportionmentNeg
-  - Greene.TotalLoad
-  - Greene.TotalLoadNeg
+  - **Bowes.A** - Bowes model A parameter
+  - **Bowes.B** - Bowes model B parameter
+  - **Bowes.C** - Bowes model C parameter
+  - **Bowes.D** - Bowes model D parameter
+  - **Bowes.Qe** - Qe for the Bowes Model
+  - **Bowes.PropQeGQ** - the proportion of the flow measurements that are lessthan? greater than??? Qe above
+  - **Bowes.PointApportionment** -
+  - **Bowes.Point.L** -  Estimate of the point load using the Bowes model
+  - **Bowes.Diffuse.L** - Estimate of the diffuse load using the Bowes model
+  - **Greene.A** - Greene model A parameter
+  - **Greene.B** - Greene model B parameter
+  - **Greene.C** - Greene model C parameter
+  - **Greene.Qe** - Qe for the Greene Model
+  - **Greene.PropQeGQ** -
+  - **Greene.PointApportionment** -
+  - **Greene.Point.L** - Estimate of the point load using the Greene model
+  - **Greene.Diffuse.L** - Estimate of the diffuse load using the Greene model
+  - **Greene.Hysteresis.L** - Estimate of the hysteresis load using the Greene model
+  - **Greene.DH.L** - Estimate of the diffuse and hysteresis load using the Greene model
+  - **Bowes.Qe.1** -
+  - **Bowes.PropQeGQ.1** -
+  - **Bowes.PointApportionment.1** -
+  - **Bowes.TotalLoad** -
+  - **Greene.Qe.1** -
+  - **Greene.PropQeGQ.1** -
+  - **Greene.PointApportionment.1** -
+  - **Greene.PointApportionmentNeg** -
+  - **Greene.TotalLoad** -
+  - **Greene.TotalLoadNeg** -
