@@ -21,7 +21,21 @@ boot.params <- function(Q, P, Qhi=NULL, N=50) {
       bdf <- rbind(bdf, calc.params(Q[s1], P[s1], Qhi))
     }
   }
-  print(summary(bdf))
+  # print(summary(bdf))
+  # instead of printing the summary, we'll print the 2.5%ile, mean and 97.5%ile
+  # of each column of bdf
+
+  # library(reshape2) # in the DESCRIPTION file
+  # calling melt with id.vars=NULL because we want it to melt ALL columns
+  # and not print a message
+  jdf <- melt(bdf, id.vars=NULL)
+  # head(jdf) # variable value...
+  # library(plyr)
+  phoslam.summary <- function(sdf) {
+    c(CI=quantile(sdf$value, 0.025), Mean=mean(sdf$value), CI=quantile(sdf$value, 0.975))
+  }
+  print(ddply(jdf, .(variable), phoslam.summary))
+
   bdf
 }
 

@@ -14,4 +14,5 @@ Description: A number of useful functions to calculate Phosphate Load
     al. (2012).  Resampling is used for error estimates.
 License: GPL-2
 Imports:
-    plyr
+    plyr,
+    reshape2
