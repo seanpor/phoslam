@@ -8,6 +8,7 @@
 #' @param N the number of bootstrap replications - defaults to 50 for a reasonable size for estimating the mean.
 #' @export
 boot.params <- function(Q, P, Qhi=NULL, N=50) {
+  variable <- NULL # to appease the checking gods... sort of...
   L <- length(Q)
   stopifnot(L > 1)
   stopifnot(L == length(P))
@@ -28,13 +29,13 @@ boot.params <- function(Q, P, Qhi=NULL, N=50) {
   # library(reshape2) # in the DESCRIPTION file
   # calling melt with id.vars=NULL because we want it to melt ALL columns
   # and not print a message
-  jdf <- melt(bdf, id.vars=NULL)
+  jdf <- reshape2::melt(bdf, id.vars=NULL)
   # head(jdf) # variable value...
   # library(plyr)
   phoslam.summary <- function(sdf) {
     c(CI=quantile(sdf$value, 0.025), Mean=mean(sdf$value), CI=quantile(sdf$value, 0.975))
   }
-  print(ddply(jdf, .(variable), phoslam.summary))
+  print(plyr::ddply(jdf, variable, phoslam.summary))
 
   bdf
 }
