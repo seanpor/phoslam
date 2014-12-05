@@ -11,13 +11,23 @@ phosphorus concentrations in rivers at the landscape scale. J Hydrol 504, 216-22
 
 # Installation
 
+## Pre-requisites
+If you don't already have the "plyr" and "reshape2" packages, then you will also need to install these first.
+```
+install.packages(c("plyr","reshape2"))
+```
+
+## Linux / Mac
 If you are using R on Linux or a Mac the simplest thing is to install Hadley Wickham's devtools package from CRAN and then you should be able to install `phoslam` directly from Github by saying:
 ```
 install.packages("devtools")
 devtools::install_github("seanpor/phoslam")
 ```
 
-If you're using R on MS-Windows, then...
+## MS-Windows
+If you're using R on MS-Windows, then goto https://github.com/seanpor/phoslam/releases and grap the file phoslam_0.4.zip which you should then be able to install by going to the "Packages" menu in R for Windows and then selecting "Install package(s) from local zip files..." and following the instructions.
+
+If you're using RStudio on MS-Windows, go to the "Tools" menu and select "Install Packages...". In the "Install from:" dropdown box select "Package Archive File (.zip; .tar.gz)" and use the "Browse..." button to find the downloaded ".zip" file and click on "Install".
 
 # Basic Usage
 
@@ -27,12 +37,31 @@ library(phoslam)
 calc.params(Q, TRP)
 ```
 Will print out the results as a single row data.frame.
+Of course Q and TRP must be the same length and must be numeric vectors or equivalently the columns of a data.frame, e.g. if they are in the data.frame d2, I can say
 
+```
+calc.params(d2$Q, d2$TRP)
+```
+
+# Bootstrapping for confidence intervals
 If you also have a high-frequency dataset for the flow, Qhi (again cubic metres per second), you can now bootstrap... N=50 is enough for the mean, but you'll need say N=2000 for a reasonable estimate of the 2.5%ile and 97.5%ile quantiles I'd expect.  Obviously the values of the 95%ile range will be highly suspect if you use an N of as little as 50!
 ```
 kdf <- boot.params(d2$Q, d2$TRP, d1$Q, N=50)
 ```
 This will print a 2.5%ile, the mean and the 97.5%ile values for each of the parameters
+
+`kdf` is a data.frame with the bootstrapped values of the parameters so you can look at histograms of all of these using the wonderful `ggplot2` graphics package.
+
+```
+library(ggplot2)
+qplot(value, data=jdf, geom='histogram') + facet_wrap(~variable, scales='free_x')
+```
+
+It might complain thus:
+```
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+```
+but this is just a warning because we are using the defaults.
 
 # Output description
 
