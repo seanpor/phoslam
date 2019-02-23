@@ -87,9 +87,9 @@ TO DO, including a detailed description of each parameter output with the units 
   - **Greene.Diffuse.L** - Estimate of the diffuse load using the Greene model
   - **Greene.Hysteresis.L** - Estimate of the hysteresis load using the Greene model
   - **Greene.DH.L** - Estimate of the diffuse and hysteresis load using the Greene model
-  - **Bowes.Qe.1** -
-  - **Bowes.PropQeGQ.1** -
-  - **Bowes.PointApportionment.1** -
+  - **Bowes.Qe.1** - Qe for the Bowes Model (this does not change with high-frequency flow data)
+  - **Bowes.PropQeGQ.1** - the proportion of flows collected at high-frequency that are less than Bowes.Qe.Qhi
+  - **Bowes.PointApportionment.1** - 
   - **Bowes.TotalLoad** -
   - **Greene.Qe.1** -
   - **Greene.PropQeGQ.1** -
