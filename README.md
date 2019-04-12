@@ -57,7 +57,7 @@ plot1 <- qplot(value, data=jdf, geom='histogram') + facet_wrap(~variable, scales
 suppressMessages(print(plot1))
 ```
 
-This awkward form: `plot1<- qplot(); print(plot1)` is used to suppress the 29 un-necessary complaints:
+This awkward form: `plot1 <- qplot(); print(plot1)` is used to suppress the 29 un-necessary complaints:
 ```
 stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
