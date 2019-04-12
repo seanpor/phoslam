@@ -43,7 +43,7 @@ calc.params(d2$Q, d2$P)
 Will print out the results as a single row data.frame without confidence intervals for model parameters.
 
 # Bootstrapping for confidence intervals
-If you also have a high-frequency dataset for the flow, Qhi (again cubic metres per second), you can now bootstrap... N=50 is enough for the mean, but you'll need at least N=2000 for a reasonable estimate of the 2.5%ile and 97.5%ile quantiles.  Obviously the values of the 95%ile range will be highly suspect if you use an N of as little as 50! Bootstrapping with a low frequency dataset is technically possible but similarly, the fewer resamples you have the less robust your quantiles are. Dataframe named d1 is the high frequency Q dataset while d2 is the low frequency Q and P dataset.
+If you also have a high-frequency dataset for the flow, Qhi (again cubic metres per second), you can now bootstrap... N=50 is enough for the mean, but you'll need at least N=2000 for a reasonable estimate of the 2.5%ile and 97.5%ile quantiles.  Obviously the values of the 95%ile range will be highly suspect if you use an N of as low as 50.  Bootstrapping with a low frequency dataset is technically possible but similarly, the fewer resamples you have the less robust your quantiles are. Dataframe named d1 is the high frequency Q dataset while d2 is the low frequency Q and P dataset.
 ```
 kdf <- boot.params(d2$Q, d2$P, d1$Q, N=2000) # warning this might take quite some time!
 ```
