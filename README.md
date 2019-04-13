@@ -1,7 +1,7 @@
 phoslam
 =======
 
-The phoslam package has been designed to use either the algorithm developed by Bowes et al. (2008), hereafter known as BM, or an adjustment of the algorithm by Greene et al. (2011), hereafter known as GM, to apportion the phosphorus load in a river to point and diffuse sources. Outcomes include the percentage of the load apportioned to point and diffuse sources, the percentage of time flow is dominated by point sources (based on flow data provided either low or high frequency) and total phosphorus load. The package is currently under development with future improvements to include automated bootstrapping to provide confidence intervals of outcomes.
+The phoslam R package has been designed to use either the algorithm developed by Bowes et al. (2008), hereafter known as BM, or an adjustment of the algorithm by Greene et al. (2011), hereafter known as GM, to apportion the phosphorus load in a river to point and diffuse sources. Outcomes include the percentage of the load apportioned to point and diffuse sources, the percentage of time flow is dominated by point sources (based on flow data provided either low or high frequency) and total phosphorus load. The package is currently under development with future improvements to include automated bootstrapping to provide confidence intervals of outcomes.
 
 Bowes, M.J., Smith, J.T., Jarvie, H.P., Neal, C., 2008. Modelling of phosphorus inputs to rivers from
 diffuse and point sources. Sci Total Environ 395 (2-3), 125-138.
@@ -43,7 +43,7 @@ calc.params(d2$Q, d2$P)
 Will print out the results as a single row data.frame without confidence intervals for model parameters.
 
 # Bootstrapping for confidence intervals
-If you also have a high-frequency dataset for the flow, Qhi (again cubic metres per second), you can now bootstrap... N=50 is enough for the mean, but you'll need at least N=2000 for a reasonable estimate of the 2.5%ile and 97.5%ile quantiles.  Obviously the values of the 95%ile range will be highly suspect if you use an N of as little as 50! Bootstrapping with a low frequency dataset is technically possible but similarly, the fewer resamples you have the less robust your quantiles are. Dataframe named d1 is the high frequency Q dataset while d2 is the low frequency Q and P dataset.
+If you also have a high-frequency dataset for the flow, Qhi (again cubic metres per second), you can now bootstrap... N=50 is enough for the mean, but you'll need at least N=2000 for a reasonable estimate of the 2.5%ile and 97.5%ile quantiles.  Obviously the values of the 95%ile range will be highly suspect if you use an N of as low as 50.  Bootstrapping with a low frequency dataset is technically possible but similarly, the fewer resamples you have the less robust your quantiles are. Dataframe named d1 is the high frequency Q dataset while d2 is the low frequency Q and P dataset.
 ```
 kdf <- boot.params(d2$Q, d2$P, d1$Q, N=2000) # warning this might take quite some time!
 ```
@@ -57,7 +57,7 @@ plot1 <- qplot(value, data=jdf, geom='histogram') + facet_wrap(~variable, scales
 suppressMessages(print(plot1))
 ```
 
-This awkward form: `plot1<- qplot(); print(plot1)` is used to suppress the 29 un-necessary complaints:
+This awkward form: `plot1 <- qplot(); print(plot1)` is used to suppress the 29 un-necessary complaints:
 ```
 stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
