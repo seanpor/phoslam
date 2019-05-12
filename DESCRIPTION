@@ -1,8 +1,8 @@
 Package: phoslam
 Type: Package
-Title: Helper functions for Phosphate Load Apportionment
+Title: Helper Functions for Phosphate Load Apportionment
 Version: 0.5
-Date: 2019-04-13
+Date: 2019-05-12
 Authors@R: as.person(c(
     "Sean O'Riordain <seoriord@tcd.ie> [aut, cre]",
     "Lucy Crockford <crockfol@tcd.ie> [aut]"
@@ -13,6 +13,12 @@ Description: A number of useful functions to calculate Phosphate Load
     Apportionment, including algorithms by Bowes et al. (2008) and Greene et
     al. (2012).  Resampling is used for error estimates.
 License: GPL-2
+Encoding: UTF-8
 Imports:
+    stats,
     plyr,
-    reshape2
+    dplyr,
+    reshape2,
+    magrittr,
+    minpack.lm
+RoxygenNote: 6.1.1

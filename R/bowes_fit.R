@@ -40,27 +40,39 @@ Bowes.fit <- function(d1, bf.iMax=1e4, ConstrainBzero=FALSE) {
   bf.i <- 0 # how many times have we run nls() ?
   if (ConstrainBzero) {
     Formula <- TRP ~ A*(Q^(-1)) + C*(Q^(D-1))
+    lower.vec <- c(0,0,1)
+    upper.vec <- c(1e5, 1e5, 1e5)
+
   } else {
     Formula <- TRP ~ A*(Q^(B-1)) + C*(Q^(D-1))
+    lower.vec <- c(0, 0, 0, 1)
+    upper.vec <- c(1e5, 1, 1e5, 1e5)
   }
   repeat {
     bf.opt <- options(warn=-1) # temporarily turn off warnings completely!
     # this is because nls.control() can't do it... unfortunately
     #tmp.bf <- try( stats::nls(Formula,
-    tmp.bf <- try( minpack.lm::nlsLM(Formula,
-                       start=c(A=stats::runif(1, 1, 100),
-                               B=stats::runif(1, 0.01, 1),
+    if (ConstrainBzero) {
+      start.vec <- c(A=stats::runif(1, 1, 100),
                                C=stats::runif(1, 3, 200),
-                               D=stats::runif(1, 1, 5)),
-                       jac = NULL, # Jacobian
+                               D=stats::runif(1, 1, 5))
+    } else {
+      start.vec <- c(A=stats::runif(1, 1, 100),
+                                 B=stats::runif(1, 0.01, 1),
+                                 C=stats::runif(1, 3, 200),
+                                 D=stats::runif(1, 1, 5))
+    }
+    tmp.bf <- try( minpack.lm::nlsLM(Formula,
+                      start=start.vec,
+                      jac = NULL, # Jacobian
                        # start=c(A=0, B=0.1, C=0.1, D=9),
-                       control = stats::nls.control(maxiter=500, warnOnly=TRUE),
+                      control = stats::nls.control(maxiter=500, warnOnly=TRUE),
                        # following prints out a trace of each iteration if TRUE (default FALSE)
                        # trace=TRUE,
-                       algorithm='port',
-                       lower=c(0,0,0,1),
-                       upper=c(1e5, 1, 1e5, 1e5),
-                       data=d1) )
+                      algorithm='port',
+                      lower=lower.vec,
+                      upper=upper.vec,
+                      data=d1) )
     options(warn=bf.opt$warn) # turn warnings back on again
     if(!inherits(tmp.bf, 'try-error')) {
       # cat('got somewhere... but still might be a rubbish convergence!\n')

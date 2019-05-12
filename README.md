@@ -14,7 +14,8 @@ Greene, S., Greene, S., Taylor, D., McElarney, Y.R., Foy, R.H., Jordan, P., 2011
 ### Pre-requisites
 If you don't already have the "plyr" and "reshape2" packages, then you will also need to install these first.
 ```
-install.packages(c("plyr","reshape2"))
+install.packages(c('plyr','reshape2','dplyr',
+    'magrittr', 'minpack.lm'))
 ```
 ### Linux / Mac
 If you are using R on Linux or a Mac the simplest thing is to install Hadley Wickham's devtools package from CRAN and then you should be able to install `phoslam` directly from Github by saying:
@@ -66,6 +67,8 @@ However, this is just an over-zealous complaint message because we are using the
 # Output description
 
 TO DO, including a detailed description of each parameter output with the units involved.
+
+I also need to remove the dependancy on `plyr` since I have in some places replaced it with `dplyr` which is better and faster!
 
 ### Output Params
   - **Bowes.A** - Bowes model A parameter

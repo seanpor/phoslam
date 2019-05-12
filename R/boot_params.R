@@ -2,8 +2,20 @@
 # the Bowes and Greene coefficients along with Qe etc.
 #' @title Calculate the Bowes and Greene parameters for a given set of paired Q and P
 #' @name boot.params
+#' @details Note that the time taken is approximately linear in N
+#'   but not entirely deterministic as the starting positions for
+#'   identifying the parameters in the nonlinear models are chosen at
+#'   random and occasionally you might see an error message "Error in nlsModel(formula, mf, start, wts) :
+#'    singular gradient matrix at initial parameter estimates", which
+#'   can be ignored for now.
+#'   In some cases, particularly when you have a very small TRP data set,
+#'   the `nls()` function can have difficulty in finding the parameters
+#'   and this has been described as finding the minimum point in a valley
+#'   but it turns out that the valley has an ice lake and a lot of time
+#'   can be taken searching for the lowest point on this ice lake until
+#'   eventually it finds a small pit in the ice!
 #' @param Q the measured water flow rate in cubic metres per second
-#' @param P the Total Reactive Phostphate - units- TBD
+#' @param P the Total Reactive Phosphate - units- TBD
 #' @param Qhi the high-frequency Q values in cubic metres per second
 #' @param N the number of bootstrap replications - defaults to 50 for a reasonable size for estimating the mean.
 #' @param ConstrainBzero Do we constrain B to be zero - default FALSE

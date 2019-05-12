@@ -8,7 +8,7 @@
 #' @param ConstrainBzero if TRUE (default), then the Bowes model will constrain
 #'   B to be zero instead of allowing it to be in the range 0.01 to 1
 #' @export
-calc.params <- function(Q, P, Qhi=NULL, ConstrainBzero=TRUE) {
+calc.params <- function(Q, P, Qhi=NULL, ConstrainBzero=FALSE) {
   stopifnot(length(Q) > 1)
   stopifnot(length(Q) == length(P))
 
