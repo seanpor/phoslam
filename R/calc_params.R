@@ -5,12 +5,14 @@
 #' @param Q the measured water flow rate in cubic metres per second
 #' @param P the Total Reactive Phostphate - units- TBD
 #' @param Qhi the high-frequency Q values in cubic metres per second
+#' @param ConstrainBzero if TRUE (default), then the Bowes model will constrain
+#'   B to be zero instead of allowing it to be in the range 0.01 to 1
 #' @export
-calc.params <- function(Q, P, Qhi=NULL) {
+calc.params <- function(Q, P, Qhi=NULL, ConstrainBzero=TRUE) {
   stopifnot(length(Q) > 1)
   stopifnot(length(Q) == length(P))
-  
-  b3 <- Bowes.calcs(data.frame(Q=Q, TRP=P))
+
+  b3 <- Bowes.calcs(data.frame(Q=Q, TRP=P), ConstrainBzero=ConstrainBzero)
   g3 <- Greene.calcs(data.frame(Q=Q, TRP=P))
   res <- data.frame(# Bowes Params
                     Bowes.A=b3$Bowes.coefficients[['A']],
@@ -48,5 +50,5 @@ calc.params <- function(Q, P, Qhi=NULL) {
                                    G.C=res$Greene.C), Qhi)
     res <- data.frame(res, Bq, Gq)
   }
-  res                    
+  res
 }

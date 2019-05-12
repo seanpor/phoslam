@@ -1,6 +1,8 @@
 #' @title Fit the Bowes A,B,C,D parameters to data
 #' @param d1 dataframe containing a column "Q" and a column "TRP"
 #' @param bf.iMax maximum number of iterations of XXX defaulting to a million
+#' @param ConstrainBzero if TRUE (default), then the Bowes model will constrain
+#'   B to be zero instead of allowing it to be in the range 0.01 to 1
 #' @name Bowes.fit
 #' @export
 #
@@ -24,28 +26,35 @@
 #
 # WARNING:  occasionally this seems to fail to converge
 # so we need to trap for this as it causes an error
-# and re-start, possibly using different starting values 
+# and re-start, possibly using different starting values
 # sometimes this can take a long time to converge
 # someone referred to this as coming down the valley onto an
 # ice lake and trying to find the lowest point
 # eventually it will find a tiny pit in the ice
-Bowes.fit <- function(d1, bf.iMax=1e6) {
+Bowes.fit <- function(d1, bf.iMax=1e4, ConstrainBzero=FALSE) {
   # it is possible that this just might not converge at all!
   # the following is some insurance albeit expensive!
   # and some statistics
   bowes.ivec <- integer(bf.iMax)
-  
+
   bf.i <- 0 # how many times have we run nls() ?
+  if (ConstrainBzero) {
+    Formula <- TRP ~ A*(Q^(-1)) + C*(Q^(D-1))
+  } else {
+    Formula <- TRP ~ A*(Q^(B-1)) + C*(Q^(D-1))
+  }
   repeat {
     bf.opt <- options(warn=-1) # temporarily turn off warnings completely!
     # this is because nls.control() can't do it... unfortunately
-    tmp.bf <- try( nls(TRP ~ A*(Q^(B-1)) + C*(Q^(D-1)),
-                       start=c(A=runif(1, 1, 100),
-                               B=runif(1, 0.01, 1),
-                               C=runif(1, 3, 200),
-                               D=runif(1, 1, 5)),
+    #tmp.bf <- try( stats::nls(Formula,
+    tmp.bf <- try( minpack.lm::nlsLM(Formula,
+                       start=c(A=stats::runif(1, 1, 100),
+                               B=stats::runif(1, 0.01, 1),
+                               C=stats::runif(1, 3, 200),
+                               D=stats::runif(1, 1, 5)),
+                       jac = NULL, # Jacobian
                        # start=c(A=0, B=0.1, C=0.1, D=9),
-                       nls.control(maxiter=500, warnOnly=TRUE),
+                       control = stats::nls.control(maxiter=500, warnOnly=TRUE),
                        # following prints out a trace of each iteration if TRUE (default FALSE)
                        # trace=TRUE,
                        algorithm='port',
@@ -69,7 +78,7 @@ Bowes.fit <- function(d1, bf.iMax=1e6) {
     }
     if(bf.i >= bf.iMax) break; # no convergence what so ever OH DEAR!!!
     bf.i <- bf.i + 1
-  } 
+  }
   if (class(tmp.bf) == 'try-error')
     stop(tmp.bf)
   # add in the info from attempts

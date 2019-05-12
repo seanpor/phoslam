@@ -6,8 +6,9 @@
 #' @param P the Total Reactive Phostphate - units- TBD
 #' @param Qhi the high-frequency Q values in cubic metres per second
 #' @param N the number of bootstrap replications - defaults to 50 for a reasonable size for estimating the mean.
+#' @param ConstrainBzero Do we constrain B to be zero - default FALSE
 #' @export
-boot.params <- function(Q, P, Qhi=NULL, N=50) {
+boot.params <- function(Q, P, Qhi=NULL, N=50, ConstrainBzero=FALSE) {
   variable <- NULL # to appease the checking gods... sort of...
   L <- length(Q)
   stopifnot(L > 1)
@@ -17,9 +18,9 @@ boot.params <- function(Q, P, Qhi=NULL, N=50) {
   for (i in 1:N) {
     s1 <- sample(L, size=L, replace=TRUE)
     if (i==1) {
-      bdf <- calc.params(Q[s1], P[s1], Qhi)
+      bdf <- calc.params(Q[s1], P[s1], Qhi, ConstrainBzero)
     } else {
-      bdf <- rbind(bdf, calc.params(Q[s1], P[s1], Qhi))
+      bdf <- rbind(bdf, calc.params(Q[s1], P[s1], Qhi,ConstrainBzero))
     }
   }
   # print(summary(bdf))
@@ -32,10 +33,21 @@ boot.params <- function(Q, P, Qhi=NULL, N=50) {
   jdf <- reshape2::melt(bdf, id.vars=NULL)
   # head(jdf) # variable value...
   # library(plyr)
-  phoslam.summary <- function(sdf) {
-    c(CI=quantile(sdf$value, 0.025), Mean=mean(sdf$value), CI=quantile(sdf$value, 0.975))
-  }
-  print(plyr::ddply(jdf, variable, phoslam.summary))
+  # phoslam.summary <- function(sdf) {
+  #   c(CI=quantile(sdf$value, 0.025), Mean=mean(sdf$value), CI=quantile(sdf$value, 0.975))
+  # }
+  # print(plyr::ddply(jdf, variable, phoslam.summary))
+
+  # now for each of the variables, e.g. Bowes.A etc. do some summary stats
+  jdf %>%
+    group_by(variable) %>%
+    summarise(CI025=stats::quantile(value, 0.025, na.rm=TRUE),
+      Mean=base::mean(value, na.rm=TRUE),
+      Median=stats::median(value, na.rm=TRUE),
+      Sd=stats::sd(value, na.rm=TRUE),
+      Se=stats::sd(value, na.rm=TRUE)/sqrt(L),
+      CI975=stats::quantile(value, 0.975, na.rm=TRUE)) %>%
+    print(n=Inf)
 
   bdf
 }

@@ -4,7 +4,7 @@
 #' point to diffuse - there is always point contribution but at high flows it is
 #' outweighed by the diffuse contribution.
 #' \code{GreeneQe} takes a set of three Greene coefficient, A,B,C and solves
-#' the Greene equation for the 
+#' the Greene equation for the
 #' $TRP = A/Q   + B*Q     + C*Q^2$, i.e. TRP = Point + Diffuse + Hysteresis
 #' flow rate Q at which Point = Diffuse + Hysteresis
 #' @param A Greene equation coefficient
@@ -21,7 +21,7 @@
 #'
 #' @export
 GreeneQe <- function(A,B,C, rightedge=1, sDEBUG=NULL) {
-  # this approach works by finding the root of the 
+  # this approach works by finding the root of the
   # equation A/Q == B*Q + C*Q^2
   d1 <- function(x) A/x - (B*x + C*x^2)
   # nb. occasionally get cases where the interval doesn't "trap"
@@ -31,12 +31,12 @@ GreeneQe <- function(A,B,C, rightedge=1, sDEBUG=NULL) {
   highpoint <- -B/(2*C)
   if (!is.null(sDEBUG) && sDEBUG > 4) {
     cat(' GreeneQe: A=', A, ' B=',B, ' C=', C, '  highpoint=', highpoint, '\n')
-    # issue for  GreeneQe: A= 3.351263  B= 226.4885  C= 14.5105   highpoint= -7.804297 
+    # issue for  GreeneQe: A= 3.351263  B= 226.4885  C= 14.5105   highpoint= -7.804297
   }
   if (highpoint > 0) {
     rightedge <- min(highpoint, rightedge)
   }
-  tmp <- uniroot(d1, c(1e-9, rightedge))
+  tmp <- stats::uniroot(d1, c(1e-9, rightedge))
   tmp$root
 }
 # debug((GreeneQe)

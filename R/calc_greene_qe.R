@@ -22,9 +22,9 @@
 #' 0, Q value of min(d1$GreenePoint.L-d1$GreeneDH.L)
 Calc.Greene.Qe <- function(Greene, adf, sDEBUG=NULL) {
   qe.func <- function(x, GreeneFit) {
-    A <- coef(GreeneFit)[['A']]
-    B <- coef(GreeneFit)[['B']]
-    C <- coef(GreeneFit)[['C']]
+    A <- stats::coef(GreeneFit)[['A']]
+    B <- stats::coef(GreeneFit)[['B']]
+    C <- stats::coef(GreeneFit)[['C']]
     (B*x + C*x^2) - A/x
   }
   # we need to range search for the location of the root from zero up
@@ -34,6 +34,6 @@ Calc.Greene.Qe <- function(Greene, adf, sDEBUG=NULL) {
     cat('  in Calc.Greene.Qe(), the q.range is', q.range[[1]],
         ',', q.range[[2]], '\n')
   }
-  GQe <- uniroot(qe.func, interval=q.range, Greene)
+  GQe <- stats::uniroot(qe.func, interval=q.range, Greene)
   GQe$root
 }
