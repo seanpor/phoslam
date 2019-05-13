@@ -25,7 +25,7 @@ devtools::install_github("seanpor/phoslam")
 ```
 
 ### MS-Windows
-If you're using R on MS-Windows, then goto https://github.com/seanpor/phoslam/releases and grap the file phoslam_0.6.zip which you should then be able to install by going to the "Packages" menu in R for Windows and then selecting "Install package(s) from local zip files..." and following the instructions.
+If you're using R on MS-Windows, then goto https://github.com/seanpor/phoslam/releases and grap the latest version of the zip file phoslam_0.X.zip which you should then be able to install by going to the "Packages" menu in R for Windows and then selecting "Install package(s) from local zip files..." and following the instructions.
 
 If you're using RStudio on MS-Windows, go to the "Tools" menu and select "Install Packages...". In the "Install from:" dropdown box select "Package Archive File (.zip; .tar.gz)" and use the "Browse..." button to find the downloaded ".zip" file and click on "Install".
 
