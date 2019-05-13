@@ -20,8 +20,11 @@
 #' @param N the number of bootstrap replications - defaults to 50 for a reasonable size for estimating the mean.
 #' @param ConstrainBzero Do we constrain B to be zero - default FALSE
 #' @export
+#' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 boot.params <- function(Q, P, Qhi=NULL, N=50, ConstrainBzero=FALSE) {
   variable <- NULL # to appease the checking gods... sort of...
+#  if(getRversion() >= "2.15.1")  utils::globalVariables(c("."), add=FALSE)
   L <- length(Q)
   stopifnot(L > 1)
   stopifnot(L == length(P))
@@ -52,13 +55,13 @@ boot.params <- function(Q, P, Qhi=NULL, N=50, ConstrainBzero=FALSE) {
 
   # now for each of the variables, e.g. Bowes.A etc. do some summary stats
   jdf %>%
-    group_by(variable) %>%
-    summarise(CI025=stats::quantile(value, 0.025, na.rm=TRUE),
-      Mean=base::mean(value, na.rm=TRUE),
-      Median=stats::median(value, na.rm=TRUE),
-      Sd=stats::sd(value, na.rm=TRUE),
-      Se=stats::sd(value, na.rm=TRUE)/sqrt(L),
-      CI975=stats::quantile(value, 0.975, na.rm=TRUE)) %>%
+    dplyr::group_by(.data$variable) %>%
+    dplyr::summarise(CI025=stats::quantile(.data$value, 0.025, na.rm=TRUE),
+      Mean=base::mean(.data$value, na.rm=TRUE),
+      Median=stats::median(.data$value, na.rm=TRUE),
+      Sd=stats::sd(.data$value, na.rm=TRUE),
+      Se=stats::sd(.data$value, na.rm=TRUE)/sqrt(L),
+      CI975=stats::quantile(.data$value, 0.975, na.rm=TRUE)) %>%
     print(n=Inf)
 
   bdf

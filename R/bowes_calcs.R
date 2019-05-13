@@ -27,7 +27,11 @@ Bowes.calcs <- function(d1, AltQ=NULL, ConstrainBzero=FALSE) {
 
   # extract the coefficients
   Bowes.A <- stats::coef(Bowes)[['A']]
-  Bowes.B <- stats::coef(Bowes)[['B']]
+  if (ConstrainBzero) {
+    Bowes.B <- 0
+  } else {
+    Bowes.B <- stats::coef(Bowes)[['B']]
+  }
   Bowes.C <- stats::coef(Bowes)[['C']]
   Bowes.D <- stats::coef(Bowes)[['D']]
 
@@ -60,8 +64,13 @@ Bowes.calcs <- function(d1, AltQ=NULL, ConstrainBzero=FALSE) {
 
   # represents the Q value at which the Point load crosses over with
   # the Diffuse load value
+  if (ConstrainBzero) { # hoping that order is not important...
+      Bcoefficients=c(stats::coef(Bowes), B=0)
+  } else {
+      Bcoefficients=stats::coef(Bowes)
+  }
   list(Bowes=Bowes,
-       Bowes.coefficients=stats::coef(Bowes),
+       Bowes.coefficients=Bcoefficients,
        Bowes.Qe=Bowes.Qe,
        Bowes.PropQeGQ=Bowes.PropQeGQ,
        Bowes.PointApportionment=Bowes.PointApportionment,

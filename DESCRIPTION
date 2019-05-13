@@ -1,8 +1,8 @@
 Package: phoslam
 Type: Package
 Title: Helper Functions for Phosphate Load Apportionment
-Version: 0.5
-Date: 2019-05-12
+Version: 0.6
+Date: 2019-05-13
 Authors@R: as.person(c(
     "Sean O'Riordain <seoriord@tcd.ie> [aut, cre]",
     "Lucy Crockford <crockfol@tcd.ie> [aut]"
@@ -20,5 +20,6 @@ Imports:
     dplyr,
     reshape2,
     magrittr,
-    minpack.lm
+    minpack.lm,
+    rlang
 RoxygenNote: 6.1.1
